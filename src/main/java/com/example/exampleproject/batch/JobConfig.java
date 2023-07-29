@@ -1,16 +1,13 @@
 package com.example.exampleproject.batch;
 
 import com.example.exampleproject.entity.Student;
-import com.example.exampleproject.repository.StudentJpaRepository;
 import com.example.exampleproject.repository.StudentPandSRepository;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
@@ -24,14 +21,10 @@ import org.springframework.data.domain.Sort;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 @Configuration
 @EnableBatchProcessing
 public class JobConfig {
-
-    @Autowired
-    private StudentJpaRepository studentJpaRepository;
     @Autowired
     private StudentPandSRepository repository;
 
@@ -74,7 +67,7 @@ public class JobConfig {
     public Tasklet dataPrepareTasklet(){
         return (contribution, chunkContext) -> {
             for(int i = 0; i<100; i++){
-                Student student = studentJpaRepository.save(new Student(i, "Student"+i));
+                Student student = repository.save(new Student(i, "Student"+i));
             }
             return RepeatStatus.FINISHED;
         };
