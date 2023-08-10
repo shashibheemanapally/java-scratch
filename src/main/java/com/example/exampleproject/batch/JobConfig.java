@@ -93,7 +93,7 @@ public class JobConfig {
     @Bean
     public ItemProcessor<Student,Student> processor(){
         return item -> {
-            item.setName("Cool_" + item.getName());
+            //item.setName("Cool_" + item.getName());
             return item;
         };
     }
@@ -101,8 +101,6 @@ public class JobConfig {
     @Bean
     public ItemWriter<Student> writer(){
         return items -> {
-            //items.forEach(System.out::println);
-            repository.saveAll(items);
             System.out.println("Done for "+ items.size()+ " elements");
         };
     }
