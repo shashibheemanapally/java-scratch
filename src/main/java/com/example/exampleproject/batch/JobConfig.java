@@ -67,9 +67,9 @@ public class JobConfig {
 
     private void attachFlows(SimpleJobBuilder builder, int n){
         builder.next(step2());
-        FlowBuilder<FlowJobBuilder> flowBuilder = builder.on("CONTINUE").to(step2());
+        FlowBuilder<FlowJobBuilder> flowBuilder = builder.on("CONTINUE").to(step2()).on("COMPLETED").end();
         for(int i = 1; i<n; i++){
-            flowBuilder.on("CONTINUE").to(step2());
+            flowBuilder.on("CONTINUE").to(step2()).on("COMPLETED").end();
         }
     }
 
